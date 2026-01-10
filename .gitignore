@@ -1,0 +1,50 @@
+# Python bytecode / caches
+*.py[cod]
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+backend/venv/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Test / tooling caches
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints
+
+# LaTeX build artifacts (backend)
+backend/latex/*.aux
+backend/latex/*.log
+backend/latex/*.fdb_latexmk
+backend/latex/*.fls
+backend/latex/*.synctex.gz
+backend/latex/*.pdf
+backend/latex/*.out
+backend/latex/*.toc
+
+# Generated output
+backend/output/
+backend/*.log
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,169 @@
+% Resume LaTeX - One Page Version (Backend/Python Focus for PayPal)
+% Author : Shreyash Singh
+% Last Updated: 5 Jan 2026
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{{#1 \vspace{-2pt}}}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]} 
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Shreyash Singh} \\ \vspace{2pt}
+    \small (623) 297 7664 $\vert$ \href{mailto:shreyashsingh26@gmail.com}{shreyashsingh26@gmail.com} $\vert$ \href{http://www.shreyashsingh.com}{www.shreyashsingh.com} $\vert$ \href{https://linkedin.com/in/shreyazh}{linkedin.com/in/shreyazh}
+\end{center}
+
+\vspace{-4pt}
+
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    % \item \small{\textbf{Summary:} Full stack engineer with experience building production web and mobile applications, integrating cloud architectures, APIs, and databases. Skilled in React Native Expo, Node.js, Python, and distributed systems. Experienced in designing scalable features, optimizing performance, delivering reliable products, and thriving in fast-paced collaborative environments.}
+    \item \small{\textbf{Summary:} {{ summary }}}
+\end{itemize}
+
+%-----------EXPERIENCE-----------
+\section{Professional Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Software Engineer}{Tempe, AZ}
+      {FitKind $\vert$ Healthcare}{Sep 2025 -- Present}
+      \resumeItemListStart
+            % \resumeItem{Developed full-stack fitness platform using Node.js backend with Prisma ORM and React Native/Expo/EAS for mobile app, collaborating with clients to gather requirements and deliver scalable solutions connecting trainers and users.}
+            % \resumeItem{Architected microservices on Azure (App Service, Blob Storage, SQL Database) with CI/CD, implementing secure authentication (OAuth+JWT), scalable APIs (Health, Stripe Payments), and seamless communication features to enable interactive fitness communities and progress monitoring.}
+            % \resumeItem{Collaborated in fast-paced, cross-functional environment to ensure scalability, reliability, and timely delivery}
+            \resumeItem{ {{ bullet }} }
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {Lead AI Developer}{Remote}
+      {Cmindset $\vert$ AI-powered Career Platform}{Sep 2025 -- Present}
+      \resumeItemListStart
+            % \resumeItem{Architected RAG system on AWS, leading client interactions to define requirements and manage project plans for AI-powered career platform across 100+ data sources.}
+            % \resumeItem{Built microservices with Python FastAPI and Docker, integrating REST endpoints with error handling. Demonstrated leadership in MLOps pipeline setup and team coordination.}
+            % \resumeItem{Developed generative services using LangChain, collaborating with stakeholders to ensure product delivery and continuous model evaluation in agile environments.}
+            \resumeItem{ {{ bullet }} }
+        \resumeItemListEnd
+   
+    \resumeSubheading
+      {Project Software Developer}{Tempe, AZ}
+      {Honeywell International -- Capstone Project}{Jan 2024 -- Dec 2024}
+      \resumeItemListStart
+        \resumeItem{Developed blockchain-based UAM Management platform using Hyperledger Fabric to ensure secure, immutable tracking of parts across distributed networks. Wrote optimized chaincode implementing batching and efficient data structures.}
+        \resumeItem{Built React-based management console with REST API integration. Improved system transparency and audit trails.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Bachelor of Science in Computer Science (GPA: 4.0/4.0)}{Tempe, AZ}
+      {Arizona State University}{Aug 2021 -- May 2025}
+      \resumeItemListStart
+        \resumeItem{Honors: Summa cum laude, Moeur Award, Dean's List (8x), NAmU Recipient, AP Scholar Award}
+        \resumeItem{Club Officer, Software Developers Association (SoDA): Organized technical workshops and projects for 300+ developers}
+        \resumeItem{Teaching Assistant (CSE100, CSE120) (2 years): Assisted 150+ students in C++ and Digital Design fundamentals}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Selected Projects}
+  \resumeSubHeadingListStart
+
+    % Removed fabricated "Distributed Payment Processing System" project per user request
+
+    \resumeProjectHeading
+      {\textbf{Calaminect App} $\vert$ Apple Inc. \& U.S. Department of Homeland Security $\vert$ \href{https://github.com/zelzar/ProjectX}{GitHub}}{}
+        \resumeItemListStart
+          \resumeItem{Led development of an iOS app enabling peer-to-peer disaster relief coordination with Swift, backend integration, and real-time networking. Awarded \$1000 for innovation and impact.}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{Spotify Song Recommender System} $\vert$ Independent ML Project $\vert$ \href{https://github.com/zelzar/Personal-Projects/tree/potli/SongRecommender}{GitHub}}{}
+        \resumeItemListStart
+          \resumeItem{Analyzed 26K+ songs using R and Python to uncover trends in song popularity and audio feature correlations.}
+          \resumeItem{Engineered a content-based recommendation engine leveraging cosine similarity and Euclidean distance on audio features, applying ML techniques for accurate, genre-agnostic music discovery.}
+        \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={--}]
+    % \item\small{\textbf{Languages:} Python, SQL, JavaScript, TypeScript, Java, C++, C\#, Go}\vspace{-5pt}
+    % \item\small{\textbf{Backend Development:} Python (Flask, Django, FastAPI), .NET Core, Angular, RESTful APIs, SOA/Microservices, OAuth 2.0/JWT, PostgreSQL, MySQL, Redis, MongoDB, Message Queues (RabbitMQ, Kafka), WebSockets, Stripe/Payment APIs, unit testing (pytest, unittest).}\vspace{-5pt}
+    % \item\small{\textbf{DevOps/Cloud:} Docker, Kubernetes, CI/CD (GitHub Actions, Jenkins), Git, AWS (EC2, S3, RDS, Lambda, Elastic Beanstalk), GCP (Cloud Run, Cloud SQL), monitoring (Prometheus, Grafana, ELK), performance optimization.}\vspace{-5pt}
+    \item\small{\textbf{Languages:} {{ skillslanguages }}}\vspace{-5pt}
+    \item\small{\textbf{Backend Development:} {{ skillsbackend }}}\vspace{-5pt}
+    \item\small{\textbf{DevOps/Cloud:} {{ skillsdevops }}}\vspace{-5pt}
+    \item\small{\textbf{Additional:} Distributed systems, high-availability architecture, database optimization, API design, code reviews, Agile/SDLC, communication skills, leadership}\vspace{-5pt}
+\end{itemize}
+
+%-----------ACHIEVEMENTS-----------
+\section{Awards and Achievements}
+\begin{itemize}[leftmargin=0.15in, label={--}]
+  \item\small{AP Scholar Award for excellence in Computer Science, Physics, and Math}\vspace{-5pt}
+  \item\small{Gold Medal as Camp Counselor/Peer Mentor for incoming Engineering students (2024)}\vspace{-5pt}
+  \item\small{1st Prize Meshmerize Robot (Zonal), 6th International at IIT Bombay (Autonomous robotics)}\vspace{-5pt}
+  \item\small{Multiple robotics competition awards: 3rd Prize Olympus (Robot Race), Guerra de Robot (Micfest 2018)}\vspace{-5pt}
+  \item\small{Chess Champion in High School (2020), 1st in UP32 Knights Chess Competition (Lucknow)}\vspace{-5pt}
+\end{itemize}
+
+\end{document}

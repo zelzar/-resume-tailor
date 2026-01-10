@@ -1,0 +1,109 @@
+% Professional Cover Letter Template
+% Author: Shreyash Singh
+% Last Updated: 5 Jan 2026
+
+\documentclass[11pt,letterpaper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{lmodern} % Latin Modern fonts for better size support
+
+% Page setup
+\geometry{
+    top=0.75in,
+    bottom=0.75in,
+    left=0.75in,
+    right=0.75in
+}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    filecolor=blue!50!black,
+    citecolor=blue!50!black
+}
+
+% Remove page numbers
+\pagestyle{empty}
+
+% Custom colors
+\definecolor{headercolor}{RGB}{25, 25, 112}
+\definecolor{linecolor}{RGB}{70, 70, 70}
+
+% Custom commands
+\newcommand{\name}[1]{%
+    {\fontsize{24}{28}\selectfont\bfseries\color{headercolor}#1}
+}
+
+\newcommand{\contactline}[1]{%
+    {\fontsize{10}{12}\selectfont\color{gray}#1}
+}
+
+\newcommand{\dividerline}{%
+    \vspace{2pt}
+    {\color{linecolor}\rule{\textwidth}{1.5pt}}
+    \vspace{10pt}
+}
+
+\begin{document}
+
+% Header Section
+\begin{center}
+    \name{Shreyash Singh}
+    
+    \vspace{6pt}
+    
+    \contactline{
+        \href{mailto:shreyashsingh26@asu.edu}{shreyashsingh26@asu.edu} $\vert$ 
+        \href{http://www.shreyashsingh.com}{www.shreyashsingh.com} $\vert$ 
+        +1 (623) 297-7664
+    }
+    
+    \dividerline
+\end{center}
+
+% Date and recipient info
+\vspace{-8pt}
+\today
+
+\vspace{12pt}
+
+Hiring Manager\\
+Mauka Digital\\
+Company Address Line 1\\
+City, State ZIP
+
+\vspace{12pt}
+
+% Salutation
+Dear Hiring Manager,
+
+% Body paragraphs
+I am excited to apply for the Full Stack Development Intern position at Mauka Digital. I recently completed my Computer Science degree at Arizona State University and I have a strong background in full stack development, frontend design, and modern web technologies. I enjoy building clean, fast, and scalable digital experiences, which aligns closely with Mauka Digital's mission to innovate and push the boundaries of traditional marketing.
+
+In my current roles at Fitkind LLC and Career Compass AI, I build production-ready features, design and improve user-facing interfaces, refactor existing code, and work across both frontend and backend systems. My experience includes React, JavaScript, PHP, Python, WordPress, SQL, and cloud-based environments. I have also worked on projects involving CMS platforms, API integrations, and performance testing, along with research and evaluation of tools, themes, and frameworks for different builds. I enjoy improving existing systems, refining code quality, and contributing to projects that demand both creativity and technical depth.
+
+Mauka Digital's focus on custom solutions and its commitment to creativity and innovation inspires me. I would love the opportunity to contribute to your team, learn from experienced developers, and help build high-quality digital experiences that support your clients and vision.
+
+Thank you for your time and consideration. I look forward to the chance to contribute to Mauka Digital.
+
+\vspace{12pt}
+
+% Closing
+Sincerely,
+
+\vspace{24pt}
+
+\textbf{Shreyash Singh}
+
+\end{document}
