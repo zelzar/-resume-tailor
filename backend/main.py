@@ -8,8 +8,6 @@ load_dotenv(dotenv_path=env_path)
 if not os.getenv("GEMINI_API_KEY"):
     print("WARNING: GEMINI_API_KEY not found in environment!")
     print(f"Looking for .env at: {env_path}")
-else:
-    print(f"✅ API Key loaded successfully: {os.getenv('GEMINI_API_KEY')[:20]}...")
 
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
