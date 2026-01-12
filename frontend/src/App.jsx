@@ -1,13 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FiFileText, FiMail, FiBriefcase, FiDownload } from 'react-icons/fi'
+import { BsLayoutSidebarInset } from 'react-icons/bs'
 import './App.css'
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [jobTitle, setJobTitle] = useState('')
   const [jobDescription, setJobDescription] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [loadingType, setLoadingType] = useState('')
+  const [todayApplications, setTodayApplications] = useState([])
+
+  useEffect(() => {
+    loadTodayApplications()
+  }, [])
+
+  const getTodayKey = () => {
+    const today = new Date().toDateString()
+    return `resume-tailor-apps-${today}`
+  }
+
+  const loadTodayApplications = () => {
+    const saved = localStorage.getItem(getTodayKey())
+    if (saved) {
+      setTodayApplications(JSON.parse(saved))
+    }
+  }
+
+  const addApplicationToToday = (title, type) => {
+    const newApp = {
+      id: Date.now(),
+      title,
+      type,
+      timestamp: new Date().toLocaleTimeString()
+    }
+    const updated = [newApp, ...todayApplications]
+    setTodayApplications(updated)
+    localStorage.setItem(getTodayKey(), JSON.stringify(updated))
+  }
 
   const handleGenerate = async (type) => {
     if (!jobTitle.trim() || !jobDescription.trim()) {
@@ -43,6 +74,10 @@ function App() {
       a.click()
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
+
+      addApplicationToToday(jobTitle, type)
+      setJobTitle('')
+      setJobDescription('')
     } catch (err) {
       setError(err.message || 'Something went wrong')
     } finally {
@@ -52,15 +87,55 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       <div className="background">
-        <div className="gradient-orb orb-1"></div>
-        <div className="gradient-orb orb-2"></div>
-        <div className="gradient-orb orb-3"></div>
       </div>
 
-      <div className="container">
-        <div className="glass-card">
+      <button 
+        className={`sidebar-toggle sidebar-toggle-outside ${sidebarOpen ? 'hidden' : ''}`}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        title="Toggle sidebar"
+      >
+        <BsLayoutSidebarInset />
+      </button>
+
+      <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+        <div className="sidebar-header">
+          <h2>Today's Apps</h2>
+          <div className="sidebar-header-right">
+            <button 
+              className="sidebar-toggle sidebar-toggle-inside" 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              title="Close sidebar"
+            >
+              <BsLayoutSidebarInset />
+            </button>
+          </div>
+        </div>
+        <div className="sidebar-content">
+          {todayApplications.length === 0 ? (
+            <p className="empty-state">No applications yet. Start by generating your first tailored documents!</p>
+          ) : (
+            <ul className="apps-list">
+              {todayApplications.map((app) => (
+                <li key={app.id} className="app-item">
+                  <div className="app-title">{app.title}</div>
+                  <div className="app-meta">
+                    <span className="app-type">{app.type.replace('_', ' ')}</span>
+                    <span className="app-time">{app.timestamp}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="sidebar-footer">
+          <div className="app-count">{todayApplications.length} application{todayApplications.length !== 1 ? 's' : ''} today</div>
+        </div>
+      </aside>
+
+      <div className={`app-wrapper ${sidebarOpen ? 'sidebar-open' : ''}`}>
+          <div className="glass-card">
           <div className="header">
             <h1 className="title">Resume Tailor</h1>
           </div>
