@@ -1,33 +1,54 @@
 import os
 import subprocess
 import re
-from jinja2 import Environment, FileSystemLoader
 
-# --- sanitize Gemini output for LaTeX ---
 def sanitize_latex(text: str) -> str:
-    """
-    Keep only safe characters: letters, numbers, space, comma, slash, dot
-    Remove LaTeX special chars that break compilation.
-    """
-    return re.sub(r"[^A-Za-z0-9 ,/.\-]", "", text).strip()
+    if not text:
+        return ""
+    text = str(text)
+    text = re.sub(r'[#$%&_{}\\^~]', '', text)
+    text = text.replace('|', '')
+    return text.strip()
 
-# --- render Jinja LaTeX template and compile PDF ---
-def render_latex(template_path: str, context: dict, output_dir: str, output_name: str):
-    env = Environment(loader=FileSystemLoader(os.path.dirname(template_path)))
-    template = env.get_template(os.path.basename(template_path))
-    rendered_tex = template.render(**context)
-
+def render_latex_template(template_path: str, context: dict, output_dir: str, output_name: str):
+    os.makedirs(output_dir, exist_ok=True)
+    
+    with open(template_path, 'r') as f:
+        template_content = f.read()
+    
+    fitkind_bullets = context.get('fitkind_bullets', [])
+    cmindset_bullets = context.get('cmindset_bullets', [])
+    
+    all_bullets = fitkind_bullets + cmindset_bullets
+    
+    for bullet in all_bullets:
+        placeholder = '{{ bullet }}'
+        if placeholder in template_content:
+            template_content = template_content.replace(placeholder, bullet, 1)
+    
+    for key, value in context.items():
+        if isinstance(value, str) and key not in ['fitkind_bullets', 'cmindset_bullets']:
+            template_content = template_content.replace('{{ ' + key + ' }}', value)
+            template_content = template_content.replace('{{' + key + '}}', value)
+    
     tex_file = os.path.join(output_dir, f"{output_name}.tex")
     pdf_file = os.path.join(output_dir, f"{output_name}.pdf")
-
-    os.makedirs(output_dir, exist_ok=True)
+    
     with open(tex_file, "w") as f:
-        f.write(rendered_tex)
-
-    # compile LaTeX PDF
+        f.write(template_content)
+    
     subprocess.run(
-        ["pdflatex", "-interaction=nonstopmode", tex_file],
+        ["pdflatex", "-interaction=nonstopmode", f"{output_name}.tex"],
         cwd=output_dir,
-        stdout=subprocess.DEVNULL
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
     )
+    
+    subprocess.run(
+        ["pdflatex", "-interaction=nonstopmode", f"{output_name}.tex"],
+        cwd=output_dir,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    
     return pdf_file

@@ -1,109 +1,78 @@
-% Professional Cover Letter Template
+% Cover Letter - Software Engineer
 % Author: Shreyash Singh
-% Last Updated: 5 Jan 2026
 
-\documentclass[11pt,letterpaper]{article}
-
-% Packages
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{parskip}
-\usepackage{hyperref}
-\usepackage{xcolor}
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
 \usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
 \usepackage{enumitem}
-\usepackage{lmodern} % Latin Modern fonts for better size support
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
 
-% Page setup
-\geometry{
-    top=0.75in,
-    bottom=0.75in,
-    left=0.75in,
-    right=0.75in
-}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 
-% Hyperlink setup
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue!50!black,
-    urlcolor=blue!50!black,
-    filecolor=blue!50!black,
-    citecolor=blue!50!black
-}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
 
-% Remove page numbers
-\pagestyle{empty}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
 
-% Custom colors
-\definecolor{headercolor}{RGB}{25, 25, 112}
-\definecolor{linecolor}{RGB}{70, 70, 70}
-
-% Custom commands
-\newcommand{\name}[1]{%
-    {\fontsize{24}{28}\selectfont\bfseries\color{headercolor}#1}
-}
-
-\newcommand{\contactline}[1]{%
-    {\fontsize{10}{12}\selectfont\color{gray}#1}
-}
-
-\newcommand{\dividerline}{%
-    \vspace{2pt}
-    {\color{linecolor}\rule{\textwidth}{1.5pt}}
-    \vspace{10pt}
-}
+\pdfgentounicode=1
 
 \begin{document}
 
-% Header Section
+%----------HEADING----------
 \begin{center}
-    \name{Shreyash Singh}
-    
-    \vspace{6pt}
-    
-    \contactline{
-        \href{mailto:shreyashsingh26@asu.edu}{shreyashsingh26@asu.edu} $\vert$ 
-        \href{http://www.shreyashsingh.com}{www.shreyashsingh.com} $\vert$ 
-        +1 (623) 297-7664
-    }
-    
-    \dividerline
+    {\Huge \scshape Shreyash Singh} \\ \vspace{2pt}
+    \small {{ phone }} $\vert$ \href{mailto:{{ email }}}{{ email }} $\vert$ \href{http://{{ portfolio_url }}}{{ portfolio_url }} $\vert$ \href{https://linkedin.com/in/{{ linkedin }}}{linkedin.com/in/{{ linkedin }}}
 \end{center}
 
-% Date and recipient info
-\vspace{-8pt}
+\vspace{12pt}
+
 \today
 
 \vspace{12pt}
 
-Hiring Manager\\
-Mauka Digital\\
-Company Address Line 1\\
-City, State ZIP
+Hiring Manager \\
+{{ company_name }}
 
-\vspace{12pt}
+\vspace{10pt}
 
-% Salutation
 Dear Hiring Manager,
 
-% Body paragraphs
-I am excited to apply for the Full Stack Development Intern position at Mauka Digital. I recently completed my Computer Science degree at Arizona State University and I have a strong background in full stack development, frontend design, and modern web technologies. I enjoy building clean, fast, and scalable digital experiences, which aligns closely with Mauka Digital's mission to innovate and push the boundaries of traditional marketing.
+\vspace{6pt}
 
-In my current roles at Fitkind LLC and Career Compass AI, I build production-ready features, design and improve user-facing interfaces, refactor existing code, and work across both frontend and backend systems. My experience includes React, JavaScript, PHP, Python, WordPress, SQL, and cloud-based environments. I have also worked on projects involving CMS platforms, API integrations, and performance testing, along with research and evaluation of tools, themes, and frameworks for different builds. I enjoy improving existing systems, refining code quality, and contributing to projects that demand both creativity and technical depth.
+{{ opening_paragraph }}
 
-Mauka Digital's focus on custom solutions and its commitment to creativity and innovation inspires me. I would love the opportunity to contribute to your team, learn from experienced developers, and help build high-quality digital experiences that support your clients and vision.
+\vspace{6pt}
 
-Thank you for your time and consideration. I look forward to the chance to contribute to Mauka Digital.
+{{ experience_paragraph_1 }}
 
-\vspace{12pt}
+\vspace{6pt}
 
-% Closing
-Sincerely,
+{{ experience_paragraph_2 }}
 
-\vspace{24pt}
+\vspace{6pt}
 
-\textbf{Shreyash Singh}
+{{ closing_paragraph }}
+
+\vspace{10pt}
+
+Sincerely, \\
+Shreyash Singh
 
 \end{document}
