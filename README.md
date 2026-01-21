@@ -1,6 +1,6 @@
 # Resume Tailor 
 
-AI-powered tool that tailors your resume and cover letter to any job description in seconds.
+AI-powered tool that tailors your resume and cover letter to any job description in seconds using Ninja and Latex 
 
 ## What It Does
 
