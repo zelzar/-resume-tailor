@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { FiFileText, FiMail, FiBriefcase, FiDownload } from 'react-icons/fi'
+import { FiFileText, FiMail, FiBriefcase, FiDownload, FiGithub, FiLinkedin, FiGlobe } from 'react-icons/fi'
 import { BsLayoutSidebarInset } from 'react-icons/bs'
+import { HiOutlineAtSymbol } from 'react-icons/hi'
 import './App.css'
 
 function App() {
@@ -11,6 +12,14 @@ function App() {
   const [error, setError] = useState('')
   const [loadingType, setLoadingType] = useState('')
   const [todayApplications, setTodayApplications] = useState([])
+  const [copiedItem, setCopiedItem] = useState('')
+
+  const contactInfo = {
+    linkedin: 'https://linkedin.com/in/yourprofile',
+    github: 'https://github.com/yourusername',
+    website: 'https://yourwebsite.com',
+    email: 'your.email@example.com'
+  }
 
   useEffect(() => {
     loadTodayApplications()
@@ -38,6 +47,16 @@ function App() {
     const updated = [newApp, ...todayApplications]
     setTodayApplications(updated)
     localStorage.setItem(getTodayKey(), JSON.stringify(updated))
+  }
+
+  const copyToClipboard = async (text, type) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedItem(type)
+      setTimeout(() => setCopiedItem(''), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
   }
 
   const handleGenerate = async (type) => {
@@ -89,6 +108,9 @@ function App() {
   return (
     <div className={`app ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       <div className="background">
+        <div className="gradient-orb orb-1"></div>
+        <div className="gradient-orb orb-2"></div>
+        <div className="gradient-orb orb-3"></div>
       </div>
 
       <button 
@@ -112,6 +134,46 @@ function App() {
             </button>
           </div>
         </div>
+
+        {/* Contact Clipboard Section */}
+        <div className="contact-clipboard">
+          <h3>Quick Copy</h3>
+          <div className="contact-icons">
+            <button 
+              className="contact-icon"
+              onClick={() => copyToClipboard(contactInfo.linkedin, 'linkedin')}
+              title="Copy LinkedIn URL"
+            >
+              <FiLinkedin />
+              {copiedItem === 'linkedin' && <span className="copied-tooltip">Copied!</span>}
+            </button>
+            <button 
+              className="contact-icon"
+              onClick={() => copyToClipboard(contactInfo.github, 'github')}
+              title="Copy GitHub URL"
+            >
+              <FiGithub />
+              {copiedItem === 'github' && <span className="copied-tooltip">Copied!</span>}
+            </button>
+            <button 
+              className="contact-icon"
+              onClick={() => copyToClipboard(contactInfo.website, 'website')}
+              title="Copy Website URL"
+            >
+              <FiGlobe />
+              {copiedItem === 'website' && <span className="copied-tooltip">Copied!</span>}
+            </button>
+            <button 
+              className="contact-icon"
+              onClick={() => copyToClipboard(contactInfo.email, 'email')}
+              title="Copy Email"
+            >
+              <HiOutlineAtSymbol />
+              {copiedItem === 'email' && <span className="copied-tooltip">Copied!</span>}
+            </button>
+          </div>
+        </div>
+
         <div className="sidebar-content">
           {todayApplications.length === 0 ? (
             <p className="empty-state">No applications yet. Start by generating your first tailored documents!</p>
@@ -129,15 +191,17 @@ function App() {
             </ul>
           )}
         </div>
+
         <div className="sidebar-footer">
           <div className="app-count">{todayApplications.length} application{todayApplications.length !== 1 ? 's' : ''} today</div>
         </div>
       </aside>
 
       <div className={`app-wrapper ${sidebarOpen ? 'sidebar-open' : ''}`}>
-          <div className="glass-card">
+        <div className="glass-card">
           <div className="header">
             <h1 className="title">Resume Tailor</h1>
+            <p className="subtitle">Generate customized resumes and cover letters</p>
           </div>
 
           <div className="form">
@@ -200,7 +264,7 @@ function App() {
                 ) : (
                   <>
                     <FiMail />
-                    CoverLetter
+                    Cover Letter
                     <FiDownload />
                   </>
                 )}

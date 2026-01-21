@@ -61,9 +61,12 @@ async def generate_resume(
         print(f"Generation type: {type}")
         
         folder_name = job_title.replace(" ", "_").replace("/", "_")
-        output_folder = os.path.join(OUTPUT_DIR, folder_name)
+        
+        # Create temporary directory for generated files
+        temp_dir = tempfile.mkdtemp()
+        output_folder = os.path.join(temp_dir, folder_name)
         os.makedirs(output_folder, exist_ok=True)
-        print(f"Created output folder: {output_folder}")
+        print(f"Created temporary folder: {output_folder}")
         
         files_to_zip = []
         
@@ -88,7 +91,7 @@ async def generate_resume(
                 "resume_Singh"
             )
             print(f"Resume PDF created: {resume_pdf}")
-            files_to_zip.append(resume_pdf)
+            files_to_zip.append(("resume_Singh.pdf", resume_pdf))
         
         if type in ["cover_letter", "both"]:
             company_name = job_title.split(" at ")[-1] if " at " in job_title else "your company"
@@ -118,18 +121,21 @@ async def generate_resume(
                 "cl_Singh"
             )
             print(f"Cover letter PDF created: {cover_letter_pdf}")
-            files_to_zip.append(cover_letter_pdf)
+            files_to_zip.append(("cl_Singh.pdf", cover_letter_pdf))
         
-        zip_path = os.path.join(OUTPUT_DIR, f"{folder_name}.zip")
+        # Create ZIP file in temporary directory
+        zip_path = os.path.join(temp_dir, f"{folder_name}.zip")
         with zipfile.ZipFile(zip_path, 'w') as zipf:
-            for file_path in files_to_zip:
-                zipf.write(file_path, os.path.basename(file_path))
+            for filename, file_path in files_to_zip:
+                # Add files within the folder structure in the ZIP
+                zipf.write(file_path, os.path.join(folder_name, filename))
         print(f"ZIP file created: {zip_path}")
         
         return FileResponse(
             path=zip_path,
             filename=f"{folder_name}.zip",
-            media_type="application/zip"
+            media_type="application/zip",
+            background=lambda: shutil.rmtree(temp_dir)  # Cleanup temp directory after response
         )
         
     except Exception as e:

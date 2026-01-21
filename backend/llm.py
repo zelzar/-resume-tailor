@@ -48,20 +48,62 @@ def tweak_resume_sections(original_data: dict, job_description: str):
     return data
 
 def generate_cover_letter_content(original_data: dict, job_description: str, job_title: str, company_name: str):
+    # Determine which experiences are most relevant to the job
+    jd_lower = job_description.lower()
+    
+    # Analyze which projects are relevant
+    fitkind_relevant = any(keyword in jd_lower for keyword in ['mobile', 'react native', 'nodejs', 'node.js', 'full-stack', 'fullstack', 'marketplace', 'fitness', 'wellness', 'health'])
+    cmindset_relevant = any(keyword in jd_lower for keyword in ['ai', 'rag', 'aws', 'cloud', 'backend', 'microservices', 'python', 'fastapi', 'kubernetes', 'docker', 'llm', 'ml', 'machine learning'])
+    
+    # Build relevant experiences section
+    relevant_experiences = []
+    if fitkind_relevant:
+        relevant_experiences.append(f"FitKind Project: {original_data['fitkind_bullets'][0]}")
+    if cmindset_relevant:
+        relevant_experiences.append(f"Cmindset Project: {original_data['cmindset_bullets'][0]}")
+    
+    # If no specific match, include both but prioritize based on job type
+    if not relevant_experiences:
+        if any(keyword in jd_lower for keyword in ['backend', 'python', 'java', 'devops', 'cloud']):
+            relevant_experiences.append(f"Cmindset Project: {original_data['cmindset_bullets'][0]}")
+            relevant_experiences.append(f"FitKind Project: {original_data['fitkind_bullets'][0]}")
+        else:
+            relevant_experiences.append(f"FitKind Project: {original_data['fitkind_bullets'][0]}")
+            relevant_experiences.append(f"Cmindset Project: {original_data['cmindset_bullets'][0]}")
+    
+    experiences_text = "\n".join(relevant_experiences)
+    
+    # Filter skills based on job relevance
+    relevant_skills = []
+    base_skills = original_data['skills_languages']
+    
+    if any(keyword in jd_lower for keyword in ['frontend', 'react', 'javascript', 'typescript', 'ui', 'ux', 'mobile', 'ios', 'android']):
+        relevant_skills.append(original_data['skills_languages'])
+    if any(keyword in jd_lower for keyword in ['backend', 'api', 'database', 'sql', 'mongodb', 'python', 'java']):
+        relevant_skills.append(original_data['skills_backend'][:150])
+    if any(keyword in jd_lower for keyword in ['devops', 'docker', 'kubernetes', 'aws', 'gcp', 'azure', 'ci/cd']):
+        relevant_skills.append(original_data['skills_devops'][:150])
+    
+    if not relevant_skills:
+        relevant_skills = [original_data['skills_languages'], original_data['skills_backend'][:100]]
+    
+    skills_text = ", ".join(relevant_skills)
+    
     prompt = f"""
-You are a professional cover letter writer. Create a compelling, personalized cover letter for this job.
+You are writing a FINAL, PRODUCTION-READY cover letter that will be submitted immediately. This is NOT a template.
 
-**CANDIDATE EDUCATION: Bachelor of Science in Computer Science, Arizona State University (GPA: 4.0/4.0), graduated May 2025. Do NOT mention or imply any graduate degrees (Master's/PhD).**
+**CANDIDATE EDUCATION: Bachelor of Science in Computer Science, Arizona State University (GPA: 4.0/4.0), graduated May 2025.**
 
-STRICT RULES:
-1. Write 3-4 substantial paragraphs (not the generic template)
-2. Reference SPECIFIC experiences from the resume that match the job requirements
-3. Show genuine enthusiasm and understanding of the role
-4. Use concrete examples and achievements
-5. Make it personal and engaging, not robotic
-6. Output ONLY valid JSON with no markdown formatting
-7. Do not use special LaTeX characters: # $ % & _ {{{{ }}}} \\ ^ ~
-
+ABSOLUTE REQUIREMENTS:
+1. THIS IS A FINAL COVER LETTER, NOT A TEMPLATE. Generate complete, specific content for every sentence.
+2. DO NOT GENERATE ANY PLACEHOLDER TEXT. No [brackets], no "mention something", no "your research", NOTHING.
+3. Use the job description to research and understand what the company values and does.
+4. Infer company details from the job description (technology stack, company focus, values).
+5. Generate a cover letter that could be sent immediately without any edits.
+6. Every sentence must be original and specific to THIS job and company.
+7. Use the contact information provided - do not ask for it.
+8. Output ONLY valid JSON. No markdown, no code blocks, no explanations.
+9. Do not use special LaTeX characters: # $ % & _ {{{{ }}}} \\ ^ ~
 
 Job Title: {job_title}
 Company: {company_name}
@@ -69,20 +111,26 @@ Company: {company_name}
 Job Description:
 {job_description}
 
-Resume Summary: {original_data['summary']}
+Your Resume Summary: {original_data['summary']}
 
-Key Experiences:
-- FitKind: {original_data['fitkind_bullets'][0]}
-- Cmindset: {original_data['cmindset_bullets'][0]}
+Your Relevant Experience:
+{experiences_text}
 
-Skills: {original_data['skills_languages']}, {original_data['skills_backend'][:100]}...
+Your Relevant Skills: {skills_text}
 
-Return JSON with these EXACT keys:
+Your Contact Info (use in closing):
+Phone: (623) 297-7664
+Email: shreyashsingh26@gmail.com
+Portfolio: www.shreyashsingh.com
+
+GENERATE A FINAL, COMPLETE COVER LETTER. Fill in ALL details based on the job description. Make it specific to {company_name} and the {job_title} role. Do not write anything that starts with "mention", "research", "based on", or any other instruction-like text.
+
+Return ONLY this JSON - every field will be a paragraph of a final, submittable cover letter:
 {{
-  "opening_paragraph": "<strong opening that shows you understand the role and company>",
-  "experience_paragraph_1": "<paragraph highlighting relevant experience with specific examples>",
-  "experience_paragraph_2": "<paragraph about additional relevant skills and achievements>",
-  "closing_paragraph": "<compelling closing that reiterates interest and calls to action>"
+  "opening_paragraph": "First paragraph with specific enthusiasm about {company_name} and the {job_title} role based on what you learned from the job description",
+  "experience_paragraph_1": "Second paragraph describing your relevant experience with specific examples that match this job",
+  "experience_paragraph_2": "Third paragraph discussing your skills and how they solve problems mentioned in the job description",
+  "closing_paragraph": "Final paragraph with your availability, gratitude, and contact information: (623) 297-7664, shreyashsingh26@gmail.com"
 }}
 """
     
