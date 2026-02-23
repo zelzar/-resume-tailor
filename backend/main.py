@@ -12,6 +12,7 @@ if not os.getenv("GEMINI_API_KEY"):
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from starlette.background import BackgroundTask
 import shutil
 from llm import tweak_resume_sections, generate_cover_letter_content
 from utils import render_latex_template
@@ -22,7 +23,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    # Allow common local dev origins so the frontend can call this API during development.
+    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://localhost:5174"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,7 +41,7 @@ ORIGINAL_DATA = {
     "skills_devops": "Docker, Kubernetes, CI/CD (GitHub Actions, Jenkins), Git, AWS (EC2, S3, RDS, Lambda, Elastic Beanstalk), GCP (Cloud Run, Cloud SQL), monitoring (Prometheus, Grafana, ELK), performance optimization",
     "fitkind_bullets": [
         "Developed a full-stack fitness platform using Node.js and Prisma ORM with React Native (Expo/EAS), collaborating with clients to deliver a scalable trainer-user marketplace",
-        "Architected microservices on Azure (App Service, Blob Storage, SQL Database) with CI/CD, implementing secure authentication (OAuth+JWT), scalable APIs (Health, Stripe Payments), and seamless communication features to enable interactive fitness communities and progress monitoring.",
+        "Architected microservices on Azure (App Service, Blob Storage, SQL Database) with CI/CD, implementing secure authentication (OAuth+JWT), scalable APIs (Health, Stripe Payments), and communication features to enable interactive fitness communities and progress monitoring.",
         "Collaborated in fast-paced, cross-functional environment to ensure scalability, reliability, and timely delivery"
     ],
     "cmindset_bullets": [
@@ -135,7 +137,7 @@ async def generate_resume(
             path=zip_path,
             filename=f"{folder_name}.zip",
             media_type="application/zip",
-            background=lambda: shutil.rmtree(temp_dir)  # Cleanup temp directory after response
+            background=BackgroundTask(shutil.rmtree, temp_dir)  # Cleanup temp directory after response
         )
         
     except Exception as e:

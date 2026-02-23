@@ -37,18 +37,21 @@ def render_latex_template(template_path: str, context: dict, output_dir: str, ou
     with open(tex_file, "w") as f:
         f.write(template_content)
     
-    subprocess.run(
-        ["pdflatex", "-interaction=nonstopmode", f"{output_name}.tex"],
-        cwd=output_dir,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-    
-    subprocess.run(
-        ["pdflatex", "-interaction=nonstopmode", f"{output_name}.tex"],
-        cwd=output_dir,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
+    # Run pdflatex twice to resolve references. Capture output to aid debugging when it fails.
+    for i in range(2):
+        result = subprocess.run(
+            ["pdflatex", "-interaction=nonstopmode", f"{output_name}.tex"],
+            cwd=output_dir,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        if result.returncode != 0:
+            # Include the pdflatex stdout/stderr in the raised exception so FastAPI logs it.
+            raise RuntimeError(
+                f"pdflatex failed (run {i+1}/2) with return code {result.returncode}\n"
+                f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
+            )
     
     return pdf_file

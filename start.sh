@@ -7,7 +7,8 @@ echo ""
 # Start backend
 echo "🐍 Starting backend server on http://localhost:8000..."
 cd backend
-PYTHONPATH=$(pwd) python3 -m uvicorn main:app --reload --port 8000 --log-level critical > /dev/null 2>&1 &
+# Run uvicorn without redirecting output so logs and tracebacks are visible during development.
+PYTHONPATH=$(pwd) python3 -m uvicorn main:app --reload --port 8000 --log-level info &
 BACKEND_PID=$!
 
 cd ..

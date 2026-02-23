@@ -16,7 +16,23 @@ if not api_key:
     raise ValueError("GEMINI_API_KEY not found in environment variables. Please check your .env file.")
 
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.0-flash-exp")
+# Allow overriding the model via environment for easier compatibility across accounts
+model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-pro")
+try:
+    model = genai.GenerativeModel(model_name)
+except Exception as e:
+    # Try to list available models to give a helpful error message (best-effort)
+    available_models = None
+    try:
+        available_models = genai.list_models()
+    except Exception:
+        available_models = "(failed to list models via SDK)"
+
+    raise RuntimeError(
+        f"Failed to initialize Gemini model '{model_name}': {e}\n"
+        f"Set the environment variable GEMINI_MODEL to a valid model name.\n"
+        f"Available models (SDK response): {available_models}"
+    )
 
 def tweak_resume_sections(original_data: dict, job_description: str):
     prompt = build_prompt(original_data, job_description)
